@@ -11,7 +11,9 @@ hosts.forEach(function (host) {
 		var lgtv = new_lgtv({url: "ws://"+host+":3000"});
 		lgtv.on('connect', function() {
 			console.log(host+" connected, turning off");
-			lgtv.request('ssap://system/turnOff');
+			lgtv.request('ssap://system/turnOff', function (err, res) {
+				lgtv.disconnect();
+			});
 		});
 		break;
 
