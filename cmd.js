@@ -29,6 +29,20 @@ hosts.forEach(function (host) {
 		});
 		break;
 
+	case 'rickroll':
+		var lgtv = new_lgtv({url: "ws://"+host+":3000"});
+
+		lgtv.on('connect', function() {
+			console.log(host+" connected, opening browser");
+
+			var payload = {id: "youtube.leanback.v4", params: {contentTarget: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}};
+			lgtv.request('ssap://system.launcher/launch',
+				payload,
+				function (err, res) { lgtv.disconnect(); }
+			);
+		});
+		break;
+
 	default:
 		console.log("Unsupported command: "+cmd);
 		// lgtv.request('ssap://system.notifications/createToast', {message: 'Morgan now controls all TVs '+ host});
