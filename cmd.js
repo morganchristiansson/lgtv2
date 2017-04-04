@@ -17,6 +17,18 @@ hosts.forEach(function (host) {
 		});
 		break;
 
+	case 'dashboard':
+		var lgtv = new_lgtv({url: "ws://"+host+":3000"});
+		lgtv.on('connect', function() {
+			console.log(host+" connected, opening browser");
+
+			lgtv.request('ssap://system.launcher/open',
+				{target: 'http://ubuntu.localdomain:9400/receiver'},
+				function (err, res) { lgtv.disconnect(); }
+			);
+		});
+		break;
+
 	default:
 		console.log("Unsupported command: "+cmd);
 		// lgtv.request('ssap://system.notifications/createToast', {message: 'Morgan now controls all TVs '+ host});
